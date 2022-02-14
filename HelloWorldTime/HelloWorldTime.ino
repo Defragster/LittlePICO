@@ -54,6 +54,24 @@ void setup()
   }
   cycTime = ESP.getCycleCount() - cycTime;
   Serial.printf("\tCycle count for %d calls : %u [noise %u]\n",ii , cycTime, jj );
+
+#include "esp_timer.h"
+
+//void measure_important_function(void) {
+    const unsigned MEASUREMENTS = 5;
+    uint64_t start = esp_timer_get_time();
+
+    for (int retries = 0; retries < MEASUREMENTS; retries++) {
+        //important_function(); // This is the thing you need to measure
+          logMemory();
+    }
+
+    uint64_t end = esp_timer_get_time();
+
+    printf("%u iterations took %ull milliseconds (%ull microseconds per invocation)\n",
+           MEASUREMENTS, (end - start)/1000, (end - start)/MEASUREMENTS);
+//}
+  
 }
 
 uint32_t myTime = millis();
