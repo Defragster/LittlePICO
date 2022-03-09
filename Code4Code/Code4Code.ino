@@ -41,6 +41,7 @@ uint32_t isrCycles, allCycles;
 void setup() {
   Serial.begin(115200);
   while (!Serial && millis() < 2500 );
+  delay(2000);
   if ( CrashReport) Serial.print( CrashReport);
   Serial.println("\n" __FILE__ " " __DATE__ " " __TIME__);
   isEncrypt();
@@ -61,7 +62,7 @@ void setup() {
   Serial.printf("\n\tNot enabled _isr() char[] Testing XXXXX 59.\n");
   delay(100);
   piTime = micros();
-  iiCnt = theCount = ThisFunc180( 0, seePi( PI_DIGITS, szPi ), &sumPi60dig );
+  iiCnt = theCount = ThisFunc90( 0, seePi( PI_DIGITS, szPi ), &sumPi60dig );
   piTime = micros() - piTime;
   Serial.printf("Cascading %lu calls took %lu us [%lu piCycles] : net %lu us\n", theCount, piTime, piCycles, piTime - piCycles / 600);
   piCycles = 0;
@@ -94,7 +95,7 @@ void setup() {
   allCycles = ARM_DWT_CYCCNT;
   //  Alpha.begin( testAlpha, isrRate );
   piTime = micros();
-  theCount = ThisFunc180( 0, seePi( PI_DIGITS, szPi ), &sumPi60dig );
+  theCount = ThisFunc90( 0, seePi( PI_DIGITS, szPi ), &sumPi60dig );
   piTime = micros() - piTime;
   //  Alpha.end( );
   allCycles = ARM_DWT_CYCCNT - allCycles;
@@ -142,7 +143,7 @@ void loop() {
     uint32_t theCount;
     piCycles = 0;
     piTime = micros();
-    theCount = ThisFunc180( 0, seePi( PI_DIGITS, szPi ), &sumPi60dig );
+    theCount = ThisFunc90( 0, seePi( PI_DIGITS, szPi ), &sumPi60dig );
     Serial.printf( "%s Completed CASCADE Count %lu\t", szTeensy, theCount );
     piTime = micros() - piTime;
     Serial.printf("\nCascading took %lu us [%lu piCycles] : net %lu us\n", piTime, piCycles, piTime - piCycles / 600);
